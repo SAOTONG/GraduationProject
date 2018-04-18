@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mListView.setAdapter(mAdapter);
 
     }
+
+//    跳转不消毁activity
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -96,12 +99,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.imageView:
                  Intent intent = new Intent(MainActivity.this, UserActivity.class);
                     startActivity(intent);
-                    finish();
                     break;
                 case R.id.textView:
                     Intent intent2 = new Intent(MainActivity.this, UserActivity.class);
                     startActivity(intent2);
-                    finish();
                     break;
             }
         }
@@ -172,4 +173,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+//按系统返回键不消毁当前activity
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(false);
+            return true;
+        }
+        return  super.onKeyDown(keyCode, event);
+    }
+
 }
