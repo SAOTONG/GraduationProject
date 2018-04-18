@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.sao.graduationproject.PullRefreshLayout
+    <com.example.sao.graduationproject.main.ui.PullRefreshLayout
         android:id="@+id/main_pullrefresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
             android:layout_height="match_parent">
 
         </ListView>
-    </com.example.sao.graduationproject.PullRefreshLayout>
+    </com.example.sao.graduationproject.main.ui.PullRefreshLayout>
 
     <!--<ScrollView-->
     <!--android:layout_width="match_parent"-->
