@@ -17,21 +17,22 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+
 import com.example.sao.graduationproject.R;
+
 import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.sao.graduationproject.R.id.imageView;
 import static com.example.sao.graduationproject.R.id.start;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PullRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PullRefreshLayout.OnRefreshListener {
 
     private PullRefreshLayout mPullRefreshLayout;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
-    private RecyclerView recyclerView;
-    private ImageView mimageView;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,16 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mPullRefreshLayout = (PullRefreshLayout) findViewById(R.id.main_pullrefresh_layout);
         mPullRefreshLayout.setRefreshListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View drawview = navigationView.inflateHeaderView(R.layout.nav_header_main);
-//        mimageView = (ImageView) drawview.findViewById(R.id.imageView);
         drawview.findViewById(R.id.imageView).setOnClickListener(mOnClickListener);
         drawview.findViewById(R.id.textView).setOnClickListener(mOnClickListener);
         initListView();
@@ -91,13 +84,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-//    跳转不消毁activity
+    //    跳转不消毁activity
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.imageView:
-                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.textView:
@@ -117,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mHandler.sendEmptyMessageDelayed(2, 3 * 1000);
 
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -173,13 +167,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-//按系统返回键不消毁当前activity
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+
+    //按系统返回键不消毁当前activity
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
             return true;
         }
-        return  super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
     }
 
 }

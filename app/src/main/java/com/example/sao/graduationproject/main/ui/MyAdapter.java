@@ -16,39 +16,39 @@ import java.util.List;
  */
 
 public class MyAdapter extends RecyclerView.Adapter {
-  private List<String> mDatas;
-  private LayoutInflater mInflater;
+    private List<String> mDatas;
+    private LayoutInflater mInflater;
 
-  public MyAdapter(Context context, List<String> mDatas) {
-    this.mDatas = mDatas;
-    this.mInflater = LayoutInflater.from(context);
-  }
-
-  class MyViewHolder extends RecyclerView.ViewHolder {
-
-    private TextView title;
-
-    public MyViewHolder(View itemView) {
-      super(itemView);
-      title = (TextView) itemView.findViewById(R.id.list_item_text);
+    public MyAdapter(Context context, List<String> mDatas) {
+        this.mDatas = mDatas;
+        this.mInflater = LayoutInflater.from(context);
     }
-  }
 
-  @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    MyViewHolder myViewHolder = new MyViewHolder(mInflater.inflate(R.layout.list_item, parent, false));
-    return myViewHolder;
-  }
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    MyViewHolder myViewHolder = (MyViewHolder) holder;
-    myViewHolder.title.setText(mDatas.get(position));
-  }
+        private TextView title;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.list_item_text);
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        MyViewHolder myViewHolder = new MyViewHolder(mInflater.inflate(R.layout.list_item, parent, false));
+        return myViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        MyViewHolder myViewHolder = (MyViewHolder) holder;
+        myViewHolder.title.setText(mDatas.get(position));
+    }
 
 
-  @Override
-  public int getItemCount() {
-    return mDatas.size();
-  }
+    @Override
+    public int getItemCount() {
+        return mDatas.size();
+    }
 }
