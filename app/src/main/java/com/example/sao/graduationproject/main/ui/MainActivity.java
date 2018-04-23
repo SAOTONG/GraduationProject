@@ -8,41 +8,52 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.example.sao.graduationproject.R;
-
+import com.example.sao.graduationproject.main.model.*;
+import com.example.sao.graduationproject.main.model.MyAdapter;
 import android.content.Intent;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.sao.graduationproject.R.id.imageView;
-import static com.example.sao.graduationproject.R.id.start;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PullRefreshLayout.OnRefreshListener {
 
     private PullRefreshLayout mPullRefreshLayout;
     private ListView mListView;
-    private ArrayAdapter<String> mAdapter;
+    private ArrayList<CarBean.Car> date;
+    private MyAdapter myAdapter;
+    private int pageNo = 1;
+    private ExecutorService es;
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
+//                mListView.clear
+//                myAdapter = (MyAdapter)mListView.getAdapter();
+//                int count = myAdapter.getCount();
+//                if (count>0){
+//                    mListView.setAdapter(new MyAdapter(date,this));
+//                }
+//                new DownAsynctask(date, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
+//                pageNo = 1;
+//                initListView();
+                date.clear();
+                pageNo = 1;
+                new DownAsynctask(date, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
                 mPullRefreshLayout.refreshFinished();
             } else if (msg.what == 2) {
-                for (int i = 1; i <= 10; i++) {
-                    mAdapter.add("i" + i);
-                }
+//                for (int i = 1; i <= 10; i++) {
+//                    mAdapter.add("i" + i);
+//                }
+                pageNo += 1;
+                new DownAsynctask(date, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
                 mPullRefreshLayout.loadMoreFinished();
             }
         }
@@ -74,13 +85,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initListView() {
-        List<String> list = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            list.add("item:" + i);
-        }
+//        List<String> list = new ArrayList<>();
+//        for (int i = 1; i <= 20; i++) {
+//            list.add("item:" + i);
+//        }
         mListView = (ListView) findViewById(R.id.main_listview);
-        mAdapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item_text, list);
-        mListView.setAdapter(mAdapter);
+        date = new ArrayList<CarBean.Car>();
+        myAdapter = new MyAdapter(date, this);
+//        mAdapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item_text, list);
+        mListView.setAdapter(myAdapter);
+        es = Executors.newFixedThreadPool(10);
+        new DownAsynctask(date, myAdapter, this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
 
     }
 
