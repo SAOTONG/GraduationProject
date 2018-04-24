@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.sao.graduationproject.R;
 import com.example.sao.graduationproject.main.model.*;
@@ -26,22 +27,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private PullRefreshLayout mPullRefreshLayout;
     private ListView mListView;
-    private ArrayList<CarBean.Car> date;
+    private ArrayList<CompetionBean.Competion> data;
     private MyAdapter myAdapter;
     private int pageNo = 1;
     private ExecutorService es;
+    private CompetionBean.Competion competion;
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                date.clear();
+                data.clear();
                 pageNo = 1;
-                new DownAsynctask(date, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
+                new DownAsynctask(data, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
                 mPullRefreshLayout.refreshFinished();
             } else if (msg.what == 2) {
                 pageNo += 1;
-                new DownAsynctask(date, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
+                new DownAsynctask(data, myAdapter, MainActivity.this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
                 mPullRefreshLayout.loadMoreFinished();
             }
         }
@@ -56,30 +58,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View drawview = navigationView.inflateHeaderView(R.layout.nav_header_main);
         drawview.findViewById(R.id.imageView).setOnClickListener(mOnClickListener);
         drawview.findViewById(R.id.textView).setOnClickListener(mOnClickListener);
+
         initListView();
 
     }
 
     private void initListView() {
         mListView = (ListView) findViewById(R.id.main_listview);
-        date = new ArrayList<CarBean.Car>();
-        myAdapter = new MyAdapter(date, this);
+        data = new ArrayList<CompetionBean.Competion>();
+        myAdapter = new MyAdapter(data, this);
         mListView.setAdapter(myAdapter);
         es = Executors.newFixedThreadPool(10);
-        new DownAsynctask(date, myAdapter, this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
-
+        new DownAsynctask(data, myAdapter, this).executeOnExecutor(es, "http://mrobot.pcauto.com.cn/v2/cms/channels/3?pageNo=" + pageNo + "&pageSize=20&v=4.0.0");
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                competion = data.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("title",competion.getTitle());
+                bundle.putString("date",competion.getPubDate());
+                Intent intent = new Intent(MainActivity.this,CompetionActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     //    跳转不消毁activity

@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class DownAsynctask extends AsyncTask<String,Void,byte[]>{
 
-    ArrayList<CarBean.Car> data;
+    ArrayList<CompetionBean.Competion> data;
     MyAdapter adapter;
     Context context;
 
-    public DownAsynctask(ArrayList<CarBean.Car> data, MyAdapter adapter, Context context) {
+    public DownAsynctask(ArrayList<CompetionBean.Competion> data, MyAdapter adapter, Context context) {
         super();
         this.data = data;
         this.adapter = adapter;
@@ -41,7 +41,7 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]>{
             //把从网络上获取的byte类型的数据转换为String字符串
             String jsonString = new String(result);
             //用json解析工具来解析该字符串数据
-            CarBean cb = JsonUtils.parseJson(jsonString);
+            CompetionBean cb = JsonUtils.parseJson(jsonString);
             //取出data数据，并保存到集合中
             data.addAll(cb.data);
             //刷新数据

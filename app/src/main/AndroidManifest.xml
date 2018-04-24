@@ -24,6 +24,9 @@
             android:name=".main.ui.UserActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".main.ui.CompetionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

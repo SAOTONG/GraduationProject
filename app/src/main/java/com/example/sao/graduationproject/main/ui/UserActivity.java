@@ -18,6 +18,9 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        initViews();
+    }
+    protected void initViews(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitle("");
         TextView textView = (TextView) findViewById(R.id.textView2);

@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter {
 
-    ArrayList<CarBean.Car> data;
+    ArrayList<CompetionBean.Competion> data;
     Context context;
 
-    public MyAdapter(ArrayList<CarBean.Car> data, Context context) {
+    public MyAdapter(ArrayList<CompetionBean.Competion> data, Context context) {
         super();
         this.data = data;
         this.context = context;
@@ -59,9 +59,9 @@ public class MyAdapter extends BaseAdapter {
             holder = (ViewHold) convertView.getTag();
         }
         //通过position获取当前item的car数据，从car数据中取出title、pubDate
-        CarBean.Car car = data.get(position);
-        holder.tv_title.setText(car.title);
-        holder.tv_date.setText(car.pubDate);
+        CompetionBean.Competion competion = data.get(position);
+        holder.tv_title.setText(competion.title);
+        holder.tv_date.setText(competion.pubDate);
         return convertView;
     }
 
