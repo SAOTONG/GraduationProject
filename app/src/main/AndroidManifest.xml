@@ -24,8 +24,33 @@
             android:name=".main.ui.UserActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".main.ui.CompetionActivity"
+        <activity android:name=".main.ui.CompetitionDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".main.ui.ApplySuccessActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".main.ui.CompetitionApplyActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".main.ui.MyCompetitionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".main.ui.MyCompetitionDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".main.ui.MyProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".main.ui.MyAchievementActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 

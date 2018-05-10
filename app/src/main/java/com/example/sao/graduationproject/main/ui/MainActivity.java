@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Bundle bundle = new Bundle();
                 bundle.putString("title",competion.getTitle());
                 bundle.putString("date",competion.getPubDate());
-                Intent intent = new Intent(MainActivity.this,CompetionActivity.class);
+                Intent intent = new Intent(MainActivity.this,CompetitionDetailsActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -159,12 +159,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+        if (id == R.id.nav_competition) {
+            Intent intent3 = new Intent(MainActivity.this, MyCompetitionActivity.class);
+            startActivity(intent3);
+        } else if (id == R.id.nav_project) {
+            Intent intent4 = new Intent(MainActivity.this, MyProjectActivity.class);
+            startActivity(intent4);
+        } else if (id == R.id.nav_achievement) {
+            Intent intent5 = new Intent(MainActivity.this, MyAchievementActivity.class);
+            startActivity(intent5);
         }
 
 //        } else if (id == R.id.nav_manage) {
